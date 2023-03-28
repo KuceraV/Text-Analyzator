@@ -7,6 +7,8 @@ email: vojtechkuc@gmail.com
 discord: Vojta K.
 '''
 
+import pprint
+
 TEXTS = ['''
 Situated about 10 miles west of Kemmerer,
 Fossil Butte is a ruggedly impressive
@@ -69,4 +71,78 @@ else:
 
 # choice of text to be analyzed
 #######################################################
-text_choice = int(input('Enter a number btw. 1 and 3 to select: '))
+text_choice = (input('Enter a number btw. 1 and 3 to select: '))
+text_number = ['1', '2', '3']
+
+# choice of the text has to be digit and in range(1-3)
+#######################################################
+if not (text_choice.isdigit()) or (text_choice not in text_number):
+    print('Insert only integer in range from 1 to 3')
+    quit()
+else:
+    text_choice = int(text_choice)
+
+analyzed_text = TEXTS[text_choice - 1]
+
+word_list = []
+
+# number of words
+#######################################################
+for word in analyzed_text.split():
+    word_list.append(word.strip(',.!?;'))
+
+# pprint.pprint((word_list))
+word_count = len(word_list)
+
+# sum of all title words
+#######################################################
+sum_title_words = 0
+
+for title_word in word_list:
+    if title_word.istitle():
+        sum_title_words += 1
+
+# sum of all upper words
+#######################################################
+sum_upper_words = 0
+
+for upper_word in word_list:
+    if upper_word.isupper():
+        sum_upper_words += 1
+
+# sum of all lower words
+#######################################################
+sum_lower_words = 0
+
+for lower_word in word_list:
+    if lower_word.islower():
+        sum_lower_words += 1
+
+# sum of all numer string
+#######################################################
+sum_num_str = 0
+
+for num_str in word_list:
+    if num_str.isdigit():
+        sum_num_str += 1
+
+# sum of string numbers
+#######################################################
+sum_num_word = 0
+
+for num_str in word_list:
+    if num_str.isdigit():
+        num_int = (int(num_str))
+        sum_num_word += num_int
+
+
+print(
+    separator,
+    f'There are {word_count} words in the selected text.',
+    f'There are {sum_title_words} titlecase words.',
+    f'There are {sum_upper_words} uppercase words.',
+    f'There are {sum_lower_words} lowercase words.',
+    f'There are {sum_num_str} numeric strings.',
+    f'The sum of all the numbers {sum_num_word}.',
+    sep='\n'
+)
