@@ -84,14 +84,17 @@ else:
 
 analyzed_text = TEXTS[text_choice - 1]
 
-word_list = []
+# word_list = []
+#
+# for word in analyzed_text.split():
+#     word_list.append(word.strip(',.!?;'))
+
+word_list = [word.strip(',.!?;') for word in analyzed_text.split()]
+
+# pprint.pprint((word_list))
 
 # number of words
 #######################################################
-for word in analyzed_text.split():
-    word_list.append(word.strip(',.!?;'))
-
-# pprint.pprint((word_list))
 word_count = len(word_list)
 
 # sum of all title words
@@ -107,7 +110,7 @@ for title_word in word_list:
 sum_upper_words = 0
 
 for upper_word in word_list:
-    if upper_word.isupper():
+    if upper_word.isupper() and upper_word.isalpha():
         sum_upper_words += 1
 
 # sum of all lower words
@@ -135,7 +138,8 @@ for num_str in word_list:
         num_int = (int(num_str))
         sum_num_word += num_int
 
-
+# print of results
+#######################################################
 print(
     separator,
     f'There are {word_count} words in the selected text.',
@@ -146,3 +150,25 @@ print(
     f'The sum of all the numbers {sum_num_word}.',
     sep='\n'
 )
+
+print(separator)
+print('LEN|', 'OCCURENCE'.center(18), '|NR.')
+print(separator)
+
+
+# calculating the frequency of the words length and print the results
+#######################################################
+frequency = {}
+
+for len_of_word in word_list:
+    if len(len_of_word) not in frequency:
+        frequency[len(len_of_word)] = 1
+    else:
+        frequency[len(len_of_word)] += 1
+
+for key, value in sorted(frequency.items()):
+    print(
+        str(key).rjust(3) + '|',
+        ("*" * value) + '|'.rjust(20 - value),
+        value
+    )
